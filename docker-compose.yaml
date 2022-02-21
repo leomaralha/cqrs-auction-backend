@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  api:
+    container_name: ic-state-management-proposal
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    env_file: .env
+    ports:
+      - 3229:9229
+      - 5000:${API_PORT}
+    volumes:
+      - .:/server
+    links:
+      - redis
+
+  redis:
+    image: redis:7.0-rc1
+    expose:
+      - 6379
+    ports:
+      - 6379:6379
